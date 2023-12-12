@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="stuone" class="cn.spring.pojo.Student">
+        <property name="sid" value="1"></property>
+        <property name="sname" value="xm"></property>
+        <property name="score" value="999"></property>
+<!--        <property name="teacherMap">-->
+<!--            <map>-->
+<!--                <entry key="10086" value-ref="teaone"></entry>-->
+<!--                <entry key="10010" value-ref="teatwo"></entry>-->
+<!--            </map>-->
+<!--        </property>-->
+
+        <property name="teacherMap" ref="map"></property>
+    </bean>
+
+    <bean id="stutwo" class="cn.spring.pojo.Student">
+        <property name="sid" value="2"></property>
+        <property name="sname" value="vivo"></property>
+        <property name="score" value="999"></property>
+    </bean>
+
+    <bean id="clazzOne" class="cn.spring.pojo.Clazz">
+        <property name="cid" value="111"></property>
+        <property name="cname" value="NPNP"></property>
+        <property name="students" ref="studentList"></property>
+<!--        <property name="students">-->
+<!--            <list>-->
+<!--                <ref bean="stuone"></ref>-->
+<!--                <ref bean="stutwo"></ref>-->
+<!--            </list>-->
+<!--        </property>-->
+    </bean>
+
+<!--    配置集合类型的bean 需要使用utils的约束-->
+    <util:list id="studentList">
+        <ref bean="stuone"></ref>
+        <ref bean="stutwo"></ref>
+    </util:list>
+
+    <bean id="teaone" class="cn.spring.pojo.Teacher">
+        <property name="TId" value="001"></property>
+        <property name="tname" value="大宝"></property>
+    </bean>
+
+    <bean id="teatwo" class="cn.spring.pojo.Teacher">
+        <property name="TId" value="002"></property>
+        <property name="tname" value="小宝"></property>
+    </bean>
+
+    <util:map id="map">
+        <entry key="10086" value-ref="teaone"></entry>
+        <entry key="10010" value-ref="teatwo"></entry>
+    </util:map>
+
+    <bean id="stusix" class="cn.spring.pojo.Student"
+        p:sid="1005" p:sname="张三" p:age="18" p:score="99" p:teacherMap-ref="map">
+    </bean>
+</beans>

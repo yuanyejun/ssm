@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--    容器中若没有bean NoSuchBeanDefinitionException -->
+<!--    <bean id="student" class="cn.spring.pojo.Student"></bean>-->
+<!--  NoUniqueBeanDefinitionException  <bean id="student2" class="cn.spring.pojo.Student"></bean>-->
+
+<!--    <bean id="person" class="cn.spring.pojo.Student">-->
+<!--        <property name="sid" value="1011"></property>-->
+<!--        <property name="sname" value="小米"></property>-->
+<!--        <property name="age" value="20"></property>-->
+<!--        <property name="gender" value="0"></property>-->
+<!--    </bean>-->
+
+    <bean id="teacher" class="cn.spring.pojo.Teacher"></bean>
+
+    <bean id="stustruct" class="cn.spring.pojo.Student">
+        <constructor-arg value="1011"></constructor-arg>
+        <constructor-arg value="李四"></constructor-arg>
+        <constructor-arg value="18"></constructor-arg>
+        <constructor-arg value="1" name="gender"></constructor-arg>
+        <constructor-arg value="100" name="score"></constructor-arg>
+    </bean>
+
+    <bean id="studentfour" class="cn.spring.pojo.Student">
+        <property name="sid" value="1003"></property>
+<!--        <property name="sname" value="&lt;小米&gt;"></property>-->
+        <property name="sname">
+<!--            <![CDATA[....]]>   -->
+            <value><![CDATA[<小米>]]></value>
+        </property>
+        <property name="gender">
+            <null></null>
+        </property>
+    </bean>
+
+    <bean id="studentFive" class="cn.spring.pojo.Student">
+                <property name="sid" value="1011"></property>
+                <property name="sname" value="小米"></property>
+                <property name="age" value="20"></property>
+                <property name="gender" value="0"></property>
+<!--        级联赋值-->
+<!--                <property name="clazz" ref="clazzone"></property>-->
+<!--                <property name="clazz.cid" value="111"></property>-->
+<!--                <property name="clazz.cname" value="NP"></property>-->
+                <property name="clazz">
+<!--                    内部bean 只能再内部使用 不能直接通过ioc获取  -->
+                    <bean id="clazzId" class="cn.spring.pojo.Clazz">
+                        <property name="cname" value="NPP"></property>
+                        <property name="cid" value="111"></property>
+                    </bean>
+                </property>
+                <property name="hobby">
+                    <array>
+                        <value>抽烟</value>
+                        <value>喝酒</value>
+                    </array>
+                </property>
+    </bean>
+
+    <bean id="clazzone" class="cn.spring.pojo.Clazz">
+        <property name="cid" value="1"></property>
+        <property name="cname" value="NB"></property>
+    </bean>
+</beans>

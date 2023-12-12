@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <div id="app">
+        <h1>index.html</h1>
+        <input type="button" value="测试springmvc处理ajax" @click="testAjax()">
+    </div>
+    <hr>
+    <form th:action="@{/test/RequestBody}" method="post">
+        用户名：<input type="text" name="username"><br>
+        密码：<input type="password" name="password"><br>
+        <input type="submit">
+    </form>
+
+    <hr>
+    <a th:href="@{/test/down}">下载图片</a>
+    <hr>
+    <form th:action="@{/test/up}" method="post" enctype="multipart/form-data">
+        头像:<input type="file" name="photo"><br/>
+        <input type="submit" value="上传">
+    </form><br/>
+    <script type="text/javascript" th:src="@{/js/vue.js}"></script>
+    <script type="text/javascript" th:src="@{/js/aios.min.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/jquery-1.8.2.min.js}"></script>-->
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:"#app",
+            methods:{
+                testAjax(){
+                    axios({
+                        url:"",
+                        method:"",
+                        params:{},
+                        data:{},
+                    }).then(Response => {
+                        console.log(Response.data);
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

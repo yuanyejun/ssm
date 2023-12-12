@@ -1,0 +1,12 @@
+singleton（默认） 在IOC容器中，这个bean的对象始终为单实例 IOC容器初始化时 单例
+prototype 这个bean在IOC容器中有多个实例 获取bean时 多例
+
+bean生命周期
+    bean对象创建（调用无参构造器）
+    给bean对象设置属性
+    bean对象初始化之前操作（由bean的后置处理器负责）
+    bean对象初始化（需在配置bean时指定初始化方法）
+    bean对象初始化之后操作（由bean的后置处理器负责）
+    bean对象就绪可以使用
+    bean对象销毁（需在配置bean时指定销毁方法）
+    IOC容器关闭

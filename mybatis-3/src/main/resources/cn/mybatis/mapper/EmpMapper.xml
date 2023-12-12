@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mybatis.mapper.EmpMapper">
+
+    <resultMap id="Resultemp" type="emp">
+        <id property="empId" column="emp_id"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="gender" property="gender"></result>
+        <result column="dept_id" property="deptId"></result>
+        <result column="age" property="age"></result>
+    </resultMap>
+
+<!--    多对一映射关系-->
+    <resultMap id="empAndDeptResultMap" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="gender" property="gender"></result>
+        <result column="dept_id" property="deptId"></result>
+        <result column="age" property="age"></result>
+        <result column="dept_id" property="dept.deptId"></result>
+        <result column="dept_name" property="dept.deptName"></result>
+    </resultMap>
+
+    <resultMap id="empAndDeptResultMap2" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="gender" property="gender"></result>
+        <result column="dept_id" property="deptId"></result>
+        <result column="age" property="age"></result>
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+<!--    分步查询 处理多对一映射关系 -->
+    <resultMap id="empAndDeptResultMapByStep" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="gender" property="gender"></result>
+        <result column="dept_id" property="deptId"></result>
+        <result column="age" property="age"></result>
+        <association property="dept"
+                     select="cn.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+                     column="dept_id"
+                    fetchType="eager">
+
+        </association>
+    </resultMap>
+
+
+    <select id="getEmpAndDeptByStep" resultMap="empAndDeptResultMapByStep">
+            select * from t_emp where emp_id = ${empid}
+    </select>
+
+    <select id="getByUserId" resultMap="Resultemp">
+        select * from t_emp where emp_id = #{id}
+    </select>
+
+    <select id="getByList" resultType="emp">
+        select * from t_emp;
+    </select>
+
+    <select id="getEmpAndDeptByEmpId" resultMap="empAndDeptResultMap2">
+        select * from t_emp left join t_dept on t_emp.dept_id = t_dept.dept_id
+        where t_emp.emp_id = #{empid}
+    </select>
+
+    <select id="getDeptAndEmpByStepTwo" resultType="emp">
+        select * from t_emp where dept_id = #{deptId}
+    </select>
+</mapper>
